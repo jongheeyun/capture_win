@@ -145,12 +145,16 @@ void StopHttpServer() {
 }
 
 void ScreenCaptureTask(const std::string& folderPath) {
+    u_int64 time = 0;
     STOP_CAPTURE = false;
     StartHttpServer(); // Start the HTTP server
     while (!STOP_CAPTURE && g_Running.load()) {
-        std::string fileName = GetTimestamp();
-        CaptureScreen(folderPath, fileName);
-        std::this_thread::sleep_for(std::chrono::minutes(5));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        time++;
+        if (time % 5) {
+            std::string fileName = GetTimestamp();
+            CaptureScreen(folderPath, fileName);
+        }
     }
     StopHttpServer(); // Stop the HTTP server
 }
@@ -228,8 +232,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             }
             break;
         case ID_EXIT:
-            g_Running.store(false);
             STOP_CAPTURE = true;
+            g_Running.store(false);
             if (captureThread.joinable()) {
                 captureThread.join();
             }
@@ -252,8 +256,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         break;
     case WM_DESTROY:
         // Signal the capture thread to stop and join it.
-        g_Running.store(false);
         STOP_CAPTURE = true;
+        g_Running.store(false);
         if (captureThread.joinable()) {
             captureThread.join();
         }
