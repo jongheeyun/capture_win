@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 # Add httplib as a subdirectory
 add_subdirectory(external/httplib)
 
+# Add these lines to set the runtime library to static
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+
 # Add the executable
 add_executable(capture_win
     capture_win/src/main.cpp
