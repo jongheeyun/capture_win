@@ -1,0 +1,10 @@
+^C:\WORKSPACE\CAPTURE_WIN\CAPTURE_WIN\BUILD\CMAKEFILES\2EF400B09811200F1D61FE62759C311D\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Workspace/capture_win/capture_win -BC:/Workspace/capture_win/capture_win/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Workspace/capture_win/capture_win/build/capture_win.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

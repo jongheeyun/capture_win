@@ -1,0 +1,3 @@
+C:/Workspace/capture_win/build/CMakeFiles/capture_win.dir
+C:/Workspace/capture_win/build/CMakeFiles/ALL_BUILD.dir
+C:/Workspace/capture_win/build/CMakeFiles/ZERO_CHECK.dir
