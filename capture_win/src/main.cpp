@@ -20,6 +20,8 @@ using namespace std;
 #define ID_REMOVE_PNGS 4
 #define WM_TRAYICON (WM_USER + 1)
 
+bool STOP_CAPTURE = false;
+
 // Global variables to control the capture thread.
 std::atomic<bool> g_Running(false);
 std::thread captureThread;
@@ -143,8 +145,9 @@ void StopHttpServer() {
 }
 
 void ScreenCaptureTask(const std::string& folderPath) {
+    STOP_CAPTURE = false;
     StartHttpServer(); // Start the HTTP server
-    while (g_Running.load()) {
+    while (!STOP_CAPTURE && g_Running.load()) {
         std::string fileName = GetTimestamp();
         CaptureScreen(folderPath, fileName);
         std::this_thread::sleep_for(std::chrono::minutes(5));
@@ -226,10 +229,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             break;
         case ID_EXIT:
             g_Running.store(false);
+            STOP_CAPTURE = true;
             if (captureThread.joinable()) {
                 captureThread.join();
             }
-            StopHttpServer(); // Stop the HTTP server
             PostQuitMessage(0);
             break;
         case ID_GO_SYSTEMTRAY:
@@ -250,12 +253,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     case WM_DESTROY:
         // Signal the capture thread to stop and join it.
         g_Running.store(false);
+        STOP_CAPTURE = true;
         if (captureThread.joinable()) {
             captureThread.join();
         }
-
-        StopHttpServer(); // Stop the HTTP server
-
         RemoveTrayIcon();
         PostQuitMessage(0);
         break;
