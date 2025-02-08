@@ -145,15 +145,17 @@ void StopHttpServer() {
 }
 
 void ScreenCaptureTask(const std::string& folderPath) {
-    u_int64 time = 0;
+    int INTERVAL = 200; // Capture screen every 200 seconds
+    int time = INTERVAL;
     STOP_CAPTURE = false;
     StartHttpServer(); // Start the HTTP server
     while (!STOP_CAPTURE && g_Running.load()) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
         time++;
-        if (time % 5) {
+        if (time / INTERVAL) {
             std::string fileName = GetTimestamp();
             CaptureScreen(folderPath, fileName);
+            time = 0;
         }
     }
     StopHttpServer(); // Stop the HTTP server
@@ -237,6 +239,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
             if (captureThread.joinable()) {
                 captureThread.join();
             }
+            RemovePngFiles(folderPath); // Remove PNG files
             PostQuitMessage(0);
             break;
         case ID_GO_SYSTEMTRAY:
@@ -261,6 +264,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         if (captureThread.joinable()) {
             captureThread.join();
         }
+        RemovePngFiles(folderPath); // Remove PNG files
         RemoveTrayIcon();
         PostQuitMessage(0);
         break;
