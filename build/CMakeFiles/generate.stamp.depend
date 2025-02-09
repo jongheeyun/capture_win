@@ -24,8 +24,8 @@ C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC-CXX.cmake
 C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC.cmake
 C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake
 C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake
-C:/Workspace/capture_win/build/CMakeFiles/3.31.5/CMakeCCompiler.cmake
-C:/Workspace/capture_win/build/CMakeFiles/3.31.5/CMakeCXXCompiler.cmake
-C:/Workspace/capture_win/build/CMakeFiles/3.31.5/CMakeRCCompiler.cmake
-C:/Workspace/capture_win/build/CMakeFiles/3.31.5/CMakeSystem.cmake
 C:/Workspace/capture_win/capture_win/CMakeLists.txt
+C:/Workspace/capture_win/capture_win/build/CMakeFiles/3.31.5/CMakeCCompiler.cmake
+C:/Workspace/capture_win/capture_win/build/CMakeFiles/3.31.5/CMakeCXXCompiler.cmake
+C:/Workspace/capture_win/capture_win/build/CMakeFiles/3.31.5/CMakeRCCompiler.cmake
+C:/Workspace/capture_win/capture_win/build/CMakeFiles/3.31.5/CMakeSystem.cmake
